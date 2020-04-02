@@ -1,0 +1,27 @@
+﻿<Window x:Class="SellerCodeManagerWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SellerCodeManagerWPF"
+        xmlns:views="clr-namespace:SellerCodeManagerWPF.Views"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TabControl>
+            <TabItem Name="UserInformation" Header="我的信息">
+                <views:UserInformationView DataContext ="{Binding UserInformation}"/>
+            </TabItem>
+            <TabItem Name="Create" Header="新建分销码">
+                <views:CreateSellerView DataContext="{Binding CreateSeller}" />
+            </TabItem>
+            <TabItem Name="List" Header="管理分销员">
+                <views:SellerListView DataContext="{Binding SellerList}"/>
+            </TabItem>
+            <TabItem Header="分账计算器" x:Name="OrderList">
+                <views:OrderListView DataContext="{Binding OrderList}"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

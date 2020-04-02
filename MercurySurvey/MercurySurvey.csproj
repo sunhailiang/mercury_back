@@ -1,0 +1,66 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <ServerGarbageCollection>false</ServerGarbageCollection>
+    <Configurations>Debug;Release;Deploy</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>E:\巅峰生物\Work\9_巅峰项目\20200311_Mecury改造\ClaraBeautynismRepository-master\MercurySurvey\MercurySurvey.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\lib\**" />
+    <Content Remove="wwwroot\lib\**" />
+    <EmbeddedResource Remove="wwwroot\lib\**" />
+    <None Remove="wwwroot\lib\**" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.60.6" />
+    <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.7" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="5.0.2" />
+    <PackageReference Include="Tencent.QCloud.Cos.Sdk.NetCore" Version="5.4.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AliyunSMS\AliyunSMS.csproj" />
+    <ProjectReference Include="..\JupiterClient\JupiterClient.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\app.4494e7b9.js" />
+    <None Include="wwwroot\js\app.4494e7b9.js.map" />
+    <None Include="wwwroot\js\app.4e140f03.js" />
+    <None Include="wwwroot\js\app.4e140f03.js.map" />
+    <None Include="wwwroot\js\chunk-877ce5cc.15a1dc9f.js" />
+    <None Include="wwwroot\js\chunk-877ce5cc.15a1dc9f.js.map" />
+    <None Include="wwwroot\js\chunk-vendors.8c6a480d.js" />
+    <None Include="wwwroot\js\chunk-vendors.8c6a480d.js.map" />
+    <None Include="wwwroot\js\chunk-vendors.b2d32db7.js" />
+    <None Include="wwwroot\js\chunk-vendors.b2d32db7.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="MercurySurvey.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

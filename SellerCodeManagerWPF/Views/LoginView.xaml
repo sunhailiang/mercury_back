@@ -1,0 +1,27 @@
+﻿<Window x:Class="SellerCodeManagerWPF.Views.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SellerCodeManagerWPF.Views"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="LoginView" Height="270" Width="360" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+    <Grid Margin="35,55,35,25">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <md:PackIcon Margin="15,15,15,0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Kind="User"/>
+        <md:PackIcon Margin="15,15,15,0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Kind="Key"/>
+        <TextBox Style="{DynamicResource MaterialDesignFloatingHintTextBox}" Text="{Binding UserName,Mode=OneWayToSource,UpdateSourceTrigger=LostFocus}" Grid.Column="1" Grid.ColumnSpan="2" md:HintAssist.Hint="用户名（默认为签署分销码时的手机号）"/>
+        <PasswordBox Style="{DynamicResource MaterialDesignFloatingHintPasswordBox}" x:Name="Password" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" md:HintAssist.Hint="密码（默认为签署分销码时的手机号）"/>
+        <Button Command="{Binding SignInCommand}" CommandParameter="{Binding ElementName=Password}" Margin="40" Content="登录" Grid.ColumnSpan="3" Grid.Row="2"/>
+    </Grid>
+</Window>

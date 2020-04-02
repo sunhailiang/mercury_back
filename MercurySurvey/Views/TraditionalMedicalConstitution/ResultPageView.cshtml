@@ -1,0 +1,107 @@
+﻿@using MercurySurvey.Models.TraditionalMedicalConstitution;
+@{
+    Layout = null;
+}
+@model List<Regime>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>中医辩证体质测试结果</title>
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/css/resultPageStyle.css">
+    <link rel="stylesheet" type="text/css" href="/css/base.css" />
+    <script>document.documentElement.className = "js"; var supportsCssVars = function () { var e, t = document.createElement("style"); return t.innerHTML = "root: { --tmp-var: bold; }", document.head.appendChild(t), e = !!(window.CSS && window.CSS.supports && window.CSS.supports("font-weight", "var(--tmp-var)")), t.parentNode.removeChild(t), e }; supportsCssVars() || alert("Please view this demo in a modern browser that supports CSS Variables.");</script>
+    <!--[if IE]>
+        <script src="http://libs.baidu.com/html5shiv/3.7/html5shiv.min.js"></script>
+    <![endif]-->
+    <style>
+        .effect-9 .social-touch {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header style="text-align:center;color:white;font-size:2rem;margin:5%;">您的体质测试结果如下，如果结果不唯一，意味着您同时拥有多种体质倾向</header>
+    <div class="container">
+        <div class="team-members row">
+            @foreach (var regime in Model)
+            {
+                string cons;
+                switch (regime.Title)
+                {
+                    case "倾向阳虚质":
+                    case "阳虚质":
+                        cons = "YangxuCons";
+                        break;
+                    case "倾向阴虚质":
+                    case "阴虚质":
+                        cons = "YinxuCons";
+                        break;
+                    case "倾向气虚质":
+                    case "气虚质":
+                        cons = "QixuCons";
+                        break;
+                    case "倾向痰湿质":
+                    case "痰湿质":
+                        cons = "TanshiCons";
+                        break;
+                    case "倾向湿热质":
+                    case "湿热质":
+                        cons = "ShireCons";
+                        break;
+                    case "倾向血瘀质":
+                    case "血瘀质":
+                        cons = "XueyuCons";
+                        break;
+                    case "倾向气郁质":
+                    case "气郁质":
+                        cons = "QiyuCons";
+                        break;
+                    case "倾向特禀质":
+                    case "特禀质":
+                        cons = "TebingCons";
+                        break;
+                    case "倾向平和质":
+                    case "平和质":
+                        cons = "PingheCons";
+                        break;
+                    default:
+                        cons = "PingheCons";
+                        break;
+                }
+                <div class="single-member effect-@(regime.DescriptionText.Length>35?"9":"3")">
+                    <div class="member-info">
+                        <h3>@regime.Title</h3>
+                        <h5>转化分：@(Math.Round(regime.CurrentCent, 2).ToString())/100</h5>
+                    </div>
+                    <div class="member-image" ontouchstart="touchstartEventHandler">
+                        <img src="/images/@(cons).png" alt="Member">
+                    </div>
+                    <div class="more-info">
+                        <p>@regime.DescriptionText</p>
+                        <div class="social-touch icon-colored">
+                            <div class="grid__item theme-1">
+                                <button class="particles-button" link="https://ceres.clarabeautynism.com/@cons">膳食建议</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src='/js/anime.min.js'></script>
+    <script src='/js/particles.js'></script>
+    <script src='/js/demo.js'></script>
+    <script>
+        function touchstartEventHandler(e) {
+            $(".hoverImage").removeClass("hoverImage");
+            e.addClass("hoverImage");
+        }
+    </script>
+</body>
+</html>

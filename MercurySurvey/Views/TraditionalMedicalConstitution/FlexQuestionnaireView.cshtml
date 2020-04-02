@@ -1,0 +1,119 @@
+﻿···························· @{
+    Layout = null;
+}
+@model EntryPointViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CLARA BEAUTYNISM 健康打卡计划体质测试</title>
+    <link href='https://fonts.googleapis.com/css?family=Days+One' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/style.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+</head>
+
+<body>
+    <header class="header">
+        <img style="max-width:70%;margin:1rem auto;display:block;" src="~/images/logo.png" />
+        <hgroup>
+            <h2 id="contentContainer" style="opacity: 1;">正在载入问卷</h2>
+            <h4 id="progressContainer" style="opacity: 1;">正在载入进度</h4>
+        </hgroup>
+    </header>
+    <div style="margin: 0 auto; position: relative;width: 85%;max-width:450pt;">
+        <dl class="list maki">
+            <dt class="singleOptionContent">做出你的选择</dt>
+            <dd><a href="#">没有(根本不)</a></dd>
+            <dd><a href="#">很少(有一点)</a></dd>
+            <dd><a href="#">有时(有些)</a></dd>
+            <dd><a href="#">经常(相当)</a></dd>
+            <dd><a href="#">总是(非常)</a></dd>
+        </dl>
+    </div>
+    <div style="height:5em"></div>
+
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="/js/makisu.js"></script>
+    <script>
+        //Razor渲染token和questionnaire变量
+        var token = "@Model.Authorization"
+        var guid = "@Model.Guid"
+
+        // The `enabled` flag will be `false` if CSS 3D isn't available
+        if ($.fn.makisu.enabled) {
+            var $maki = $('.maki');
+            // Create Makisus
+            $maki.makisu({
+                selector: 'dd',
+                overlap: 0.5,
+                speed: 0.5
+            });
+            moveNext(null);
+
+            // Toggle on click
+            $('a').click(function (selected) {
+                $('.list').makisu('toggle');
+                moveNext(selected.toElement.childNodes[0].data);
+            });
+
+            $('.toggle').on('click', function () {
+                $('.list').makisu('toggle');
+            });
+
+            $('.demo a').click(function (event) {
+                event.preventDefault();
+            });
+
+        } else {
+
+        }
+
+        function moveNext(answer) {
+            $('#contentContainer').animate({opacity:0});
+            $('#progressContainer').animate({opacity:0});
+            $.ajax({
+                url: '/Questionnaire/BeginTheAnswer',
+                dataType: 'json',
+                method: 'post',
+                timeout:5000,
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                data: JSON.stringify({ guid: guid, answer: answer }),
+                contentType: "application/json; charset=utf-8",
+                success: function (data, status, xhr) {
+                    guid = data.guid;
+                    var tryNewToken = xhr.getResponseHeader('authorization');
+                    if (tryNewToken != null && tryNewToken.trim().length != 0) {
+                        token = tryNewToken;
+                    }
+
+                    if (data.type === 'BreakConclusion') {
+                        window.location.href = data.link;
+                    } else if (data.type === 'SingleOption') {
+                        setTimeout(function () {
+                            $('.list').focus().blur().makisu('open');
+                            $('#contentContainer').text(data.content).animate({opacity:1});
+                            $('#progressContainer').text("（还有"+data.progress+"题没有完成）").animate({opacity:1});
+                        }, 500);
+                    }
+                },
+                error: function (data) {
+                    $('#contentContainer').text("网速不佳，正在与服务器进行亲切且友好的谈判");
+                    setTimeout(moveNext,100,answer);
+                },
+                complete: function (XMLHttpRequest,status) {
+                if(status == 'timeout') {
+                    $('#contentContainer').text("这个服务器好像是阳虚体质，正在打盹");
+                    setTimeout(moveNext,100,answer);
+                }
+            }
+            });
+        }
+    </script>
+</body>
+
+</html>

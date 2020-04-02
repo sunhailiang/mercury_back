@@ -1,0 +1,757 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MercurySurvey</name>
+    </assembly>
+    <members>
+        <member name="T:MercurySurvey.Controllers.EditController">
+            <summary>
+            该控制器服务于管理人员
+            </summary>
+        </member>
+        <member name="M:MercurySurvey.Controllers.EditController.Create(MercurySurvey.Models.Question)">
+            <summary>
+            Question 添加
+            </summary>
+            <param name="question">传递的question表的实体模型</param>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.EditController.Look">
+            <summary>
+            question的查询
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.EditController.Update(MercurySurvey.Models.Question)">
+            <summary>
+            
+            </summary>
+            <param name="question">question的实体模型类</param>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.EditController.Delete(System.Guid)">
+            <summary>
+            question的删除
+            </summary>
+            <param name="guid">question的questionguid字段</param>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.EditController.CreateQuestionnaire(MercurySurvey.Models.Questionnaire)">
+            <summary>
+            Questionnaire的添加
+            </summary>
+            <param name="questionnaire">questionnaire的实体数据模型类</param>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.EditController.LookQuestionnaire">
+            <summary>
+            Questionnaire表的查询
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.EditController.UpdateQuestionnaire(MercurySurvey.Models.Questionnaire)">
+            <summary>
+            Questionnaire的修改
+            </summary>
+            <param name="questionnaire">questionnair 的实体数据模型类</param>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.EditController.DeleteQuestionnaire(System.Guid)">
+            <summary>
+            Questionnaire的删除
+            </summary>
+            <param name="guid">Questionnaire中的QuestionnaireGuid</param>
+            <returns></returns>
+        </member>
+        <member name="T:MercurySurvey.Controllers.QuestionnaireController">
+            <summary>
+            答题控制器
+            </summary>
+        </member>
+        <member name="M:MercurySurvey.Controllers.QuestionnaireController.TryGetQuestionnaire(System.Guid,MercurySurvey.Models.Questionnaire@)">
+            <summary>
+            查找调查问卷
+            </summary>
+            <param name="guid">调查问卷的Guid</param>
+            <param name="questionnaire">查找到的问卷</param>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.QuestionnaireController.SeekQuestionQueue(System.Guid)">
+             <summary>
+            查找问题队列
+             </summary>
+             <param name="question"></param>
+        </member>
+        <member name="M:MercurySurvey.Controllers.QuestionnaireController.QuestionQueueBuilder(MercurySurvey.Models.Questionnaire)">
+            <summary>
+            构建问题队列
+            </summary>
+            <param name="questionnaire">指定调查问卷</param>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.QuestionnaireController.QuestionContentBuilder(MercurySurvey.Controllers.QuestionnaireController.IQueue{MercurySurvey.Models.Question})">
+            <summary>
+            构建前端问题元数据
+            </summary>
+            <param name="queue">问题队列</param>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.QuestionnaireController.SaveAnswer(System.Guid,System.String)">
+            <summary>
+            处理用户回答，将答案加入Answer表
+            </summary>
+            <param name="content"></param>
+            <param name="answerGuid"></param>
+        </member>
+        <member name="M:MercurySurvey.Controllers.QuestionnaireController.CreateTicket(System.Guid,System.Guid,System.String)">
+            <summary>
+            其他组件通过此方法创建Ticket，匿名用户可以通过Ticket取回token，开始问卷
+            </summary>
+            <param name="questionnaireGuid"></param>
+            <param name="userGuid"></param>
+            <param name="bearerToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.QuestionnaireController.RemoveTimeOutQueues">
+            <summary>
+            查找时间超过24小时的Questionnaire记录会被删除
+            </summary>
+        </member>
+        <member name="M:MercurySurvey.Controllers.QuestionnaireController.BeginTheAnswer(MercurySurvey.Models.AnswerViewModel)">
+            <summary>
+            开始答卷
+            </summary>
+            <param name="guid">问卷会传递过来的questionnaireguid</param>
+            <param name="answer">结果表</param>
+            <returns></returns>
+        </member>
+        <member name="T:MercurySurvey.Controllers.QuestionnaireController.IntelligenceQueue">
+            <summary>
+            这个队列专用于中医辩证体质调查问卷，未来应当拆分
+            </summary>
+        </member>
+        <member name="T:MercurySurvey.Controllers.QuestionnaireController.Ticket">
+            <summary>
+            门票，匿名用户通过一次性的ticketID访问MercurySurvey，获取已经渲染了Bearer Token的Razor页面
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Controllers.QuestionnaireController.Ticket.BearerToken">
+            <summary>
+            来自Jupiter Api的Bearer Token
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Controllers.QuestionnaireController.Ticket.TicketID">
+            <summary>
+            门票ID
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Controllers.QuestionnaireController.Ticket.UserGuid">
+            <summary>
+            用户ID用以和当前门票关联
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Controllers.QuestionnaireController.Ticket.QuestionnaireGuid">
+            <summary>
+            问卷ID用以和当前门票关联
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Controllers.QuestionnaireController.Ticket.TicketingTime">
+            <summary>
+            记录门票创建时间
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Controllers.QuestionnaireController.BasicQueue`1.Guid">
+            <summary>
+            队列指针
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Controllers.QuestionnaireController.BasicQueue`1.MercurySurvey#Controllers#QuestionnaireController#IQueue{T}#Count">
+            <summary>
+            获取队列长度
+            </summary>
+        </member>
+        <member name="M:MercurySurvey.Controllers.QuestionnaireController.BasicQueue`1.Dequeue">
+            <summary>
+            出队
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.QuestionnaireController.BasicQueue`1.Enqueue(`0)">
+            <summary>
+            入队
+            </summary>
+            <param name="obj"></param>
+        </member>
+        <member name="P:MercurySurvey.Controllers.QuestionnaireController.IQueue`1.Guid">
+            <summary>
+            队列指针
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Controllers.QuestionnaireController.IQueue`1.Count">
+            <summary>
+            队列长度
+            </summary>
+        </member>
+        <member name="M:MercurySurvey.Controllers.QuestionnaireController.IQueue`1.Enqueue(`0)">
+            <summary>
+            入队方法
+            </summary>
+            <param name="obj"></param>
+        </member>
+        <member name="M:MercurySurvey.Controllers.QuestionnaireController.IQueue`1.Dequeue">
+            <summary>
+            出队方法
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MercurySurvey.Controllers.ResultController">
+            <summary>
+            该控制器服务于查询答案
+            </summary>
+        </member>
+        <member name="M:MercurySurvey.Controllers.ResultController.HistoricalAnswer(System.Int32,System.Int32)">
+            <summary>
+            返回所有的Result的值分页显示
+            </summary>
+            <param name="pageIndex">页数</param>
+            <param name="pageCount">一页总条数</param>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.ResultController.FindMercuryUserinfomation(System.String,System.String)">
+            <summary>
+            实现输入姓名和手机号查询出符合要求的用户信息
+            </summary>
+            <param name="username">用户的姓名</param>
+            <param name="phonenumber">用户的电话</param>
+            <returns></returns>
+        </member>
+        <member name="T:MercurySurvey.Controllers.TraditionalMedicalConstitutionController">
+            <summary>
+            该控制器用于处理中医辩证体质调查问卷，未来应当拆分至其他类库中
+            </summary>
+        </member>
+        <member name="F:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.randomString">
+            <summary>
+            随机字符串，用于计算phoneInfoMd5
+            </summary>
+        </member>
+        <member name="M:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.FastRegistration(MercurySurvey.Models.TraditionalMedicalConstitution.UserInformation)">
+            <summary>
+            匿名用户通过该方法提交个人信息表单 v1.0版本专用
+            </summary>
+            <param name="userInformation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.GetPhoneCode(System.String)">
+            <summary>
+            发送验证码请求
+            </summary>
+            <param name="phoneNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.Result(System.Guid)">
+            <summary>
+            通过用户Guid查询该用户辩证体质测试结果，如果用户未能完成全部问题，将返回错误
+            </summary>
+            <param name="userGuid"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.QuestionConstitution">
+            <summary>
+            问题GUID-辩证体质关系对
+            </summary>
+        </member>
+        <member name="M:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.GetConstitutionPairList">
+            <summary>
+            获取问题Guid和体质的对应关系
+            </summary>
+            <returns>指示每道问题属于哪一种体质</returns>
+        </member>
+        <member name="F:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.questionConstitutions">
+            <summary>
+            记录每一道问题属于哪种体质的数组
+            </summary>
+        </member>
+        <member name="F:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.questionGuids">
+            <summary>
+            记录本问卷的问题列表
+            </summary>
+        </member>
+        <member name="M:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.GetScore(System.Guid,System.String)">
+            <summary>
+            传入问题Guid和用户回答JsonString，计算分数
+            </summary>
+            <param name="questionGuid"></param>
+            <param name="answerContent"></param>
+            <returns>分数</returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.UserAnswer(System.Guid)">
+            <summary>
+            输入userid查询出经常(相当)和总是(非常)
+            </summary>
+            <param name="userguid">用户的guid</param>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.wxAccess_token">
+            <summary>
+            获取access_token
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.GetTicket">
+            <summary>
+            获取jsapi_ticket
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.getwxconfig(System.String)">
+            <summary>
+            返回appid 时间戳 随机数 签名
+            </summary>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.Sha1(System.String,System.Text.Encoding)">
+            <summary>
+            sha1加密
+            </summary>
+            <param name="content"></param>
+            <param name="encode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.GetTimeStamp">
+            <summary>
+            获取时间戳
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.rep">
+            生成随机数字字符串
+            待生成的位数
+            生成的数字字符串
+        </member>
+        <member name="F:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.NonceStrings">
+            <summary>
+            随机字符串数组集合
+            </summary>
+        </member>
+        <member name="M:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.CreateNonceStr">
+            <summary>
+            生成签名的随机串
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.wx_model">
+            <summary>
+            获取微信网页开发js.sdk所需要的数据
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.wx_model.appId">
+            <summary>
+            微信公众号的appid这个是有微信服务器端签发
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.wx_model.timestamp">
+            <summary>
+            时间戳
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.wx_model.nonce">
+            <summary>
+            随机字符串
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.wx_model.signature">
+            <summary>
+            根据access_token生成ticketId再生成签名
+            签名内容包含 appid ticketid 时间戳 随机字符串
+            </summary>
+        </member>
+        <member name="T:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.Access_token">
+            <summary>
+            获取微信签发的Access_token
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.Access_token.access_token">
+            <summary>
+            访问签发接口得到的access_token
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.Access_token.expires_in">
+            <summary>
+            访问签发接口得到的expires_in时间一般为7200两个小时有效期
+            </summary>
+        </member>
+        <member name="T:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.wx_ticket">
+            <summary>
+            访问ticket id接口时返回的参数
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.wx_ticket.errcode">
+            <summary>
+            int 错误码
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.wx_ticket.errmsg">
+            <summary>
+            string 错误信息
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.wx_ticket.ticket">
+            <summary>
+            string 临时票据用于在获取授权连接时作为参数传入
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Controllers.TraditionalMedicalConstitutionController.wx_ticket.expires_in">
+            <summary>
+            int ticket的有效期一般为7200秒
+            </summary>
+        </member>
+        <member name="T:MercurySurvey.Controllers.UploadController">
+            <summary>
+            文件上传控制器，建议未来拆分后在一个独立的服务器上运行
+            </summary>
+        </member>
+        <member name="M:MercurySurvey.Controllers.UploadController.BeginUpload">
+            <summary>
+            文件上传接口，文件保存在运行时用户的家目录/userUploads文件夹中
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:MercurySurvey.Models.Answer.AnswerGuid">
+            <summary>
+            Answer记录的GUID
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Answer.Userid">
+            <summary>
+            与该记录关联的用户GUID
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Answer.RecordId">
+            <summary>
+            保留字段
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Answer.Ctime">
+            <summary>
+            问题发送给用户的时间
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Answer.Mtime">
+            <summary>
+            用户返回答案的时间
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Answer.Content">
+            <summary>
+            用户提交的答案的元数据json
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Answer.QuestionVersion">
+            <summary>
+            与该记录关联的问题的Version Guid
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Answer.QuestionGuid">
+            <summary>
+            与该记录关联的问题的Guid
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Answer.QuestionnaireGuid">
+            <summary>
+            与该记录关联的问卷的Version Guid
+            </summary>
+        </member>
+        <member name="T:MercurySurvey.Models.AnswerViewModel">
+            <summary>
+            Questionnaire/BeginTheAnswer方法参数类
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.AnswerViewModel.Guid">
+            <summary>
+            接收前端发送的Questionnaireguid
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.AnswerViewModel.Answer">
+            <summary>
+            接受前端发送的问题的答案
+            </summary>
+        </member>
+        <member name="T:MercurySurvey.Models.EntryPointViewModel">
+            <summary>
+            渲染流式调查问卷前端页面所需数据
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.EntryPointViewModel.Guid">
+            <summary>
+            问卷GUID
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.EntryPointViewModel.Authorization">
+            <summary>
+            来自Jupiter的Bearer Token
+            </summary>
+        </member>
+        <member name="T:MercurySurvey.Models.NoteContext">
+            <summary>
+            MercurySurvey核心数据库上下文
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.NoteContext.Question">
+            <summary>
+            问题表
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.NoteContext.Questionnaire">
+            <summary>
+            问卷表
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.NoteContext.Result">
+            <summary>
+            结果表（弃用）
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.NoteContext.Answer">
+            <summary>
+            答案表
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.NoteContext.QuestionQueue">
+            <summary>
+            队列表
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.NoteContext.UploadFile">
+            <summary>
+            上传记录表
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.NoteContext.UserInformation">
+            <summary>
+            用户信息表，未来应拆分至其他DLL
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Question.QuestionGuid">
+            <summary>
+            用户的全球唯一标识
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Question.Content">
+            <summary>
+            问题的内容
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Question.Calculator">
+            <summary>
+            核分脚本
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Question.Ctime">
+            <summary>
+            修改的时间
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Question.Version">
+            <summary>
+            版本号guid  pk
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Question.Type">
+            <summary>
+            题目的类型
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Question.QuestionPK">
+            <summary>
+            Question的自增主键
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Question.IsEnable">
+            <summary>
+            删除字段默认为true为显示删除则改为false
+            </summary>
+        </member>
+        <member name="T:MercurySurvey.Models.QuestionMetaData.BooleanOption">
+            <summary>
+            单选题-二选一
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.QuestionMetaData.BooleanOption.Option.CardImage">
+            <summary>
+            卡面图片资源地址
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.QuestionMetaData.BooleanOption.Option.Text">
+            <summary>
+            选项
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Questionnaire.QuestionnaireGuid">
+            <summary>
+            同标题记录行TID相同
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Questionnaire.Content">
+            <summary>
+            内容
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Questionnaire.Question">
+            <summary>
+            问题QuestionGuid的集合
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Questionnaire.Calculator">
+            <summary>
+            核分脚本
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Questionnaire.Ctime">
+            <summary>
+            创建的时间
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Questionnaire.Version">
+            <summary>
+            版本号Guid  pk
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Questionnaire.QuestionnairePK">
+            <summary>
+            Questionnaire的自增主键
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Questionnaire.IsDeleted">
+            <summary>
+            指示当前记录是否已经被移除
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.QuestionQueue.QueueGuid">
+            <summary>
+            表中拥有相同Guid的行属于同一个Queue
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.QuestionQueue.QuestionVersion">
+            <summary>
+            指向DbContext.Question.Version字段
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.QuestionQueue.QueueUser">
+            <summary>
+            标识当前队列的用户归属
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.QuestionQueue.Ctime">
+            <summary>
+            标识当前队列的构建时间
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.QuestionQueue.QuestionnaireGuid">
+            <summary>
+            指向DbContext.Questionnaire.Version
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.QuestionQueue.DynamicContent">
+            <summary>
+            QueueBuilder调用时动态生成的Content，优先级高于Question表中的Content
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Result.AnswerGuid">
+            <summary>
+            结果的guid
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Result.Userid">
+            <summary>
+            用户id
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Result.RecordId">
+            <summary>
+            详细信息  暂时为空未来增加一个Record表
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Result.Ctime">
+            <summary>
+            答案提交时间
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Result.Content">
+            <summary>
+            答案
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Result.Question">
+            <summary>
+            问题的id
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.Result.QuestionnaireGuid">
+            <summary>
+            问卷guid
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.TraditionalMedicalConstitution.AnswerQuestion.AnswerContent">
+            <summary>
+            Answer表中的Content
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.TraditionalMedicalConstitution.AnswerQuestion.QuestionContent">
+            <summary>
+            Question表中的Content
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.TraditionalMedicalConstitution.Regime.Title">
+            <summary>
+            体质状态
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.TraditionalMedicalConstitution.Regime.CurrentCent">
+            <summary>
+            转化分
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.TraditionalMedicalConstitution.Regime.StandCent">
+            <summary>
+            标准分
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.TraditionalMedicalConstitution.Regime.DescriptionText">
+            <summary>
+            建议
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.UploadFile.FileGuid">
+            <summary>
+            生成的新的guid
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.UploadFile.UserGuid">
+            <summary>
+            用户的guid
+            </summary>
+        </member>
+        <member name="P:MercurySurvey.Models.UploadFile.Ctime">
+            <summary>
+            文件添加到数据库的时间
+            </summary>
+        </member>
+        <member name="T:MercurySurvey.SwaggerHelper.CustomApiVersion.ApiVersions">
+            <summary>
+            Api接口版本 自定义
+            </summary>
+        </member>
+        <member name="F:MercurySurvey.SwaggerHelper.CustomApiVersion.ApiVersions.V1">
+            <summary>
+            V1 版本
+            </summary>
+        </member>
+        <member name="F:MercurySurvey.SwaggerHelper.CustomApiVersion.ApiVersions.V2">
+            <summary>
+            V2 版本
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,339 @@
+﻿<!doctype html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>CLARA BEAUTYNISM 商城</title>
+
+    <link rel="stylesheet" type="text/css" href="css/default.css">
+
+    <link rel="stylesheet" href="src/mmGrid.css">
+    <link rel="stylesheet" href="src/theme/bootstrap/mmGrid-bootstrap.css">
+    <link rel="stylesheet" href="src/mmPaginator.css">
+
+
+</head>
+
+<body>
+    <div id='loginContainer'>
+        <div class='login'>
+            <div class='login_title'>
+                <span>账号登录</span>
+            </div>
+            <div class='login_fields'>
+                <div class='login_fields__user'>
+                    <div class='icon'>
+                        <img src='img/user_icon_copy.png'>
+                    </div>
+                    <input placeholder='用户名' type='text'>
+                    <div class='validation'>
+                        <img src='img/tick.png'>
+                    </div>
+                    </input>
+                </div>
+                <div class='login_fields__password'>
+                    <div class='icon'>
+                        <img src='img/lock_icon_copy.png'>
+                    </div>
+                    <input placeholder='密码' type='password'>
+                    <div class='validation'>
+                        <img src='img/tick.png'>
+                    </div>
+                </div>
+                <div class='login_fields__submit'>
+                    <input type='submit' value='登录'>
+                    <div class='forgot'>
+                        <a href='#'>忘记密码?</a>
+                    </div>
+                </div>
+            </div>
+            <div class='success'>
+                <h2>认证成功</h2>
+                <p>欢迎回来</p>
+            </div>
+            <div class='disclaimer'>
+                <p>©上海滇峰生物科技有限公司</p>
+            </div>
+        </div>
+        <div class='authent'>
+            <img src='img/puff.svg'>
+            <p>认证中...</p>
+        </div>
+    </div>
+
+    <div id='tableContainer' style='display:none;'>
+        <button id='calculatorBtn' data-ripple>计算佣金</button>
+        <main id='mmgContainer'>
+            <table id="mmg" class="mmg">
+                <tr>
+                    <th rowspan="" colspan=""></th>
+                </tr>
+            </table>
+        </main>
+    </div>
+
+    <script type="text/javascript" src='js/stopExecutionOnTimeout.js?t=1'></script>
+    <script src="https://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="src/mmGrid.js"></script>
+    <script src="src/mmPaginator.js"></script>
+    <script src="js/ripple.js"></script>
+    <style>
+        body {
+            -webkit-text-size-adjust: 100% !important;
+            text-size-adjust: 100% !important;
+            -moz-text-size-adjust: 100% !important;
+        }
+
+
+        .ripple-container .ripple {
+            background-color: rgba(255, 255, 255, 0.4);
+            animation: ripple 2s forwards cubic-bezier(0, 0, 0.2, 1);
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+
+            80% {
+                transform: scale(1);
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        #calculatorBtn {
+            border-width: 0px;
+            border-radius: 3px;
+            background: #1E90FF;
+            cursor: pointer;
+            outline: none;
+            color: white;
+            font-size: 17px;
+            padding: 8pt;
+            margin: 15pt;
+        }
+
+        #mmgContainer {
+            margin: 15pt;
+        }
+    </style>
+
+    <script>
+        function orderStatusConverter(orderStatusCode) {
+            switch (orderStatusCode) {
+                case 101:
+                    return '用户下单';
+                case 102:
+                    return '用户取消';
+                case 103:
+                    return '超时取消';
+                case 201:
+                    return '付款成功';
+                case 202:
+                    return '用户退款';
+                case 203:
+                    return '退款完成';
+                case 301:
+                    return '发货成功';
+                case 401:
+                    return '确认收货';
+                case 402:
+                    return '确认收货';
+                default:
+                    return orderStatusCode;
+            }
+        };
+
+        // if (localStorage.hasOwnProperty('userName')) {
+        // 	$('input[type="text"]').value = localStorage.getItem('userName');
+        // 	$('input[type="password"]').value = localStorage.getItem('password');
+        // }
+
+        var loginBtn = $('input[type="submit"]')
+        loginBtn.loginSuccess = function () {
+            setTimeout(function () {
+                $('.authent').show().animate({ right: 90 }, {
+                    easing: 'easeOutQuint',
+                    duration: 600,
+                    queue: false
+                });
+
+                $('.authent').animate({ opacity: 0 }, {
+                    duration: 200,
+                    queue: false
+                }).addClass('visible');
+                $('.login').removeClass('testtwo');
+            }, 0);
+
+            setTimeout(function () {
+                $('.login').removeClass('test');
+                $('.login div').fadeOut(123);
+            }, 300);
+
+            setTimeout(function () {
+                $('.success').fadeIn();
+            }, 700);
+        };
+
+        loginBtn.click(function () {
+            $('.login').addClass('test');
+
+            setTimeout(function () {
+                $('.login').addClass('testtwo');
+            }, 300);
+
+            setTimeout(function () {
+                $('.authent').show().animate({ right: -320 }, {
+                    easing: 'easeOutQuint',
+                    duration: 600,
+                    queue: false
+                });
+                $('.authent').animate({ opacity: 1 }, {
+                    duration: 200,
+                    queue: false
+                }).addClass('visible');
+            }, 500);
+
+            // setTimeout(loginBtn.loginSuccess,2500);
+
+        });
+
+        loginBtn.click(function () {
+            var _user = $('input[type="text"]').val();
+            var _pass = $('input[type="password"]').val();
+            //执行登录
+            $.ajax({
+                url: 'https://Jupiter.clarabeautynism.com/Account/SignIn',
+                type: "POST",
+                data: JSON.stringify({ "username": _user, "passwordMD5": md5(_pass) }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (loginResult) {
+                    var items;
+                    var actuallyPrice;
+                    if (loginResult.data != null) {
+                        // localStorage.setItem('userName', _user);
+                        // localStorage.setItem('password', _pass);
+                        setTimeout(function () {
+                            loginBtn.loginSuccess();
+                            // $('#loginContainer').attr("style", "display:none;");
+                            // $('#tableContainer').attr("style", "display:block;");
+                            $('#loginContainer').hide(300);
+                            $('#tableContainer').show(300);
+                        }, 1000);
+                        //获取订单
+                        $.ajax({
+                            type: "get",
+                            url: '/Seller/Orders',
+                            headers: {
+                                'Authorization': 'Bearer ' + loginResult.data
+                            },
+                            dataType: "json",
+                            success: function (orderResult) {
+                                items = orderResult;
+
+                                for (var i = 0; i < items.length; i++) {
+                                    items[i].orderStatus = orderStatusConverter(items[i].orderStatus);
+                                }
+
+                                var cols = [
+                                    { title: '姓名', name: 'consignee' },
+                                    { title: '实付金额', name: 'actualPrice', width: 100 },
+                                    { title: '状态', name: 'orderStatus' },
+                                    { title: '订单号', name: 'orderSn', width: 200 },
+                                    { title: '确认收货时间', name: 'confirmTime' }
+                                ];
+
+                                var mmg = $('.mmg').mmGrid({
+                                    height: 'auto'
+                                    , cols: cols
+                                    , remoteSort: true
+                                    , items: items
+                                    , sortName: 'orderSn'
+                                    , sortStatus: 'asc'
+                                    , multiSelect: true
+                                    , checkCol: true
+                                    , fullWidthRows: true
+                                    , autoLoad: false
+                                    , params: function () {
+                                        //如果这里有验证，在验证失败时返回false则不执行AJAX查询。
+                                        return {
+                                            secucode: $('#secucode').val()
+                                        }
+                                    }
+                                });
+                                mmg.load();
+                            }
+                        });
+
+                        //获取当前佣金
+                        $.ajax({
+                            type: "get",
+                            url: '/Seller/Calculator',
+                            headers: {
+                                'Authorization': 'Bearer ' + loginResult.data
+                            },
+                            dataType: "json",
+                            success: function (actuallyPriceResult) {
+                                actuallyPrice = actuallyPriceResult;
+                                $('#calculatorBtn').click(function () {
+                                    alert("按照历史佣金比率和已确认收货的订单实付款计算，当前用户的总应得佣金为" + actuallyPrice + "元，该数额仅供参考。");
+                                });
+                            }
+                        });
+
+                    }
+                    else {
+                        alert(loginResult.message);
+                        location.reload();
+                    }
+                },
+                error: function () {
+                    alert('登陆错误');
+                    location.reload();
+                }
+            });
+        });
+
+
+        $('input[type="text"],input[type="password"]').focus(function () {
+            $(this).prev().animate({ 'opacity': '1' }, 200);
+        });
+        $('input[type="text"],input[type="password"]').blur(function () {
+            $(this).prev().animate({ 'opacity': '.5' }, 200);
+        });
+        $('input[type="text"],input[type="password"]').keyup(function () {
+            if (!$(this).val() == '') {
+                $(this).next().animate({
+                    'opacity': '1',
+                    'right': '30'
+                }, 200);
+            } else {
+                $(this).next().animate({
+                    'opacity': '0',
+                    'right': '20'
+                }, 200);
+            }
+        });
+        var open = 0;
+        $('.tab').click(function () {
+            $(this).fadeOut(200, function () {
+                $(this).parent().animate({ 'left': '0' });
+            });
+        });
+
+        Array.prototype.forEach.call(document.querySelectorAll('[data-ripple]'), function (element) {
+            new RippleEffect(element);
+        });
+    </script>
+</body>
+
+</html>
