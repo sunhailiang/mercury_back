@@ -28,7 +28,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.2.6" />
     <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.16" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql.Design" Version="1.1.2" />
     <PackageReference Include="ZZH.Dapper.Service" Version="1.0.0" />
